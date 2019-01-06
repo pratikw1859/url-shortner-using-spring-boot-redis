@@ -18,7 +18,6 @@ public class UrlShortnerController {
 	private RedisTemplate<String,String> redisTemplate;
 	
 	public UrlShortnerController(RedisTemplate<String, String> redisTemplate) {
-		super();
 		this.redisTemplate = redisTemplate;
 	}
 
