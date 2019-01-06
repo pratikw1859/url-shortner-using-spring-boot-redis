@@ -23,7 +23,7 @@ public class UrlShortnerController {
 
 	@PostMapping
 	public String createShortUrl(@RequestBody String url){
-		//Validate The URL using UrlValidator present in Common-validator
+		//Validate The URL using UrlValidator present in Commons-validator 
 		UrlValidator validator = new UrlValidator(new String[] {"http","https"});
 		if(validator.isValid(url)) {
 			/*
@@ -32,6 +32,8 @@ public class UrlShortnerController {
 			String id = Hashing.murmur3_128().hashString(url, StandardCharsets.UTF_16).toString();
 			/*
 			 * Store Id in Redis as a Key and Url as Value
+			 * We cannot call redis set & get methods directly so use opsForXXX() methods
+			 * here both Id & Value is String so we used opsForValue() 
 			 */
 			redisTemplate.opsForValue().set(id, url);
 			return id;
