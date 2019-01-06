@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +38,11 @@ public class UrlShortnerController {
 			return id;
 		}
 		throw new RuntimeException("Invalid Url...");
+	}
+	
+	@GetMapping("/{shortUrl}")
+	public String getOriginalUrl(@PathVariable("shortUrl") String shortUrl){
+		String originalUrl = redisTemplate.opsForValue().get(shortUrl);
+		return originalUrl;
 	}
 }
